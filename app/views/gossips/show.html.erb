@@ -1,14 +1,95 @@
 
+<%# ALERT PART %>
+<% flash.any? %>
+  <% flash.each do |color,msg|%>
+  <div class="alert alert-<%=color%> alert-dismissible fade show" role="alert">
+  <strong><%=msg%></strong>
+  <% unless flash[:errors].nil? %>
+    <%=flash[:errors]%>
+  <% end %>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% end %>
+<%# ALERT PART %>
 
+
+
+<%# GOSSIP PART %>
 <div class="card">
   <div class="card-header">
     <%= @gossip.title%>
+    <% @gossip.tags.each do |tag|%>
+      <span class="badge bg-secondary">#<%= tag.title%></span>
+    <% end%>
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">
       <p><%= @gossip.content%></p>
-      <footer class="blockquote-footer"> by <%= link_to @gossip.user.first_name, user_path(@gossip.user)  %>
+      <footer class="blockquote-footer"> by <%= link_to @gossip.user.first_name, user_path(@gossip.user)  %> from <%= link_to @gossip.user.city.name, city_path(@gossip.user.city)%>
       <cite title="Source Title">, posted on <%= @gossip.created_at.strftime('%Y-%m-%d')%>, 
-      updated at <%= @gossip.updated_at.strftime('%Y-%m-%d')%></p>
+      updated at <%= @gossip.updated_at.strftime('%Y-%m-%d')%></footer>
   </div>
 </div>
+
+<div class="container-fluid text-center row pt-4">
+  <div class="col">
+  <%=link_to "Editer ce Gossip", edit_gossip_path(@gossip), class:"btn btn-primary" %>
+  </div>
+  <div class="col">
+  <%=button_to "Supprimer ce Gossip", gossip_path(@gossip), method: :delete, class:"btn btn-danger" %>
+  </div>
+</div>
+<%# GOSSIP PART %>
+
+<%# COMMENT PART %>
+<div class="comments-part">
+<h5 class="mt-5">Commentaires</h5>
+  <ul class="list-group list-group-flush m-0 p-0">
+    <% if @gossip.comments.size < 1%>
+      <li class="list-group-item disabled m-0 p-0">Pas encore de commentaire posté</li>
+      <%else%>
+      <% @gossip.comments.order(:id).each do |comment|%>
+      <li class="list-group-item mt-1">
+        <div class="container row">
+
+          <div class="col-8">
+            <%=comment.content%>
+            <p class="text-secondary m-0 p-0"> by: <%= link_to comment.user.full_name, user_path(comment.user)  %> </p>
+          </div>
+
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <p class="m-1"><%=link_to "Editer ou Supprimer commentaire", edit_gossip_comment_path(@gossip.id,comment.id), class:"btn btn-primary" %></p>
+            </div>
+          </div>
+        </div>
+
+      </li>
+  
+      <%end %>
+    <%end %>
+  </ul>
+
+  <%# Bouton d'acces à la page new %>
+  <%# <%= link_to "Ajouter un commentaire", new_gossip_comment_path(@gossip),class:"btn btn-success" %> 
+  <%# COMMENT PART %>
+
+  <%=form_for @comment, url: gossip_comments_path(@gossip,@comment) do |f|%>
+  <div class="form-group my-3">
+    <div class="mb-3">
+      <%= select_tag "comment_author_id", options_from_collection_for_select(@users, "id", "full_name"),class:"form-select"%>
+    </div>
+    <label>Contenu du commentaire: </label>
+    <%= f.text_area :content, class: 'form-control', value:@comment.content%>
+  </div>
+  <button type="submit" class="btn btn-primary">Ajouter un commentaire</button>
+<%end%>
+
+
+
+
+
+
+
+
+

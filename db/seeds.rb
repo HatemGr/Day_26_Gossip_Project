@@ -64,4 +64,9 @@ end
 end
 
 
-
+### Post 5 Comments on each gossip
+5.times do
+  Gossip.all.each do |gossip|
+    Comment.create(content: "Comment ##{rand(0..1000)}", gossip: gossip, user: User.all.sample)
+  end
+end

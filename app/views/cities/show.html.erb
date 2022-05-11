@@ -1,0 +1,22 @@
+<h1><%= @city.name%></h1>
+
+<% Gossip.joins(:user).where(users: {city: @city}).each.with_index do |gossip,i|%>
+
+<div class="card my-3">
+    <div class="card-header">
+      Gossip n°<%= i+1 %>
+    </div>
+
+    
+    <div class="container-fluid row">
+      <div class="card-body col-8">
+        <h5 class="card-title">Titre : <%= gossip.title %></h5>
+        <p class="card-text">Auteur : <%= gossip.user.first_name%></p>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center">
+        <p><%= link_to 'Go Gossip', gossip_path(gossip) %></p>
+      </div>
+    </div>
+  </div>
+
+<%end%>

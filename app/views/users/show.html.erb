@@ -16,7 +16,7 @@
             </div>
             <div class="ms-3" style="margin-top: 130px;">
               <h5><%=@user.first_name%> <%=@user.last_name%></h5>
-              <p><%=@user.city.name%></p>
+              <p><%=link_to @user.city.name, city_path(@user.city)%></p>
             </div>
           </div>
           <div class="p-4 text-black" style="background-color: #f8f9fa;">

@@ -1,2 +1,75 @@
-<h1>Gossips#new</h1>
-<p>Find me in app/views/gossips/new.html.erb</p>
+
+<%# FORM_FOR IN IF BLOCK TO NOT AFFECT APP%>
+<% if false %>
+  <div class="container px-5 mb-3">
+    <div class="row py-4 mb-4">
+      <h2>Il est temps de faire son gossip !</h2>
+    </div>
+    <%= form_for :gossip do |f| %>
+      <div class="mb-3">
+        Auteur : <select name="">
+      </div>
+      <div class="mb-3">
+        Titre: <%= f.text_field :title, class: "form-control" %><br />
+      </div>
+      <div class="mb-3">
+        Contenu : <%= f.text_area :content, class: "form-control"  %><br />
+      </div>
+      <%# <%= f.submit%>
+      <button type="submit" class="btn btn-primary">Soumission</button>
+    <% end %>
+  </div>
+<% end %>
+<%# FORM_FOR IN IF BLOCK TO NOT AFFECT APP%>
+
+<%# ALERT PART %>
+<% flash.any? %>
+  <% flash.each do |color,msg|%>
+  <div class="alert alert-<%=color%> alert-dismissible fade show" role="alert">
+  <strong><%=msg%></strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% end %>
+<%# ALERT PART %>
+
+
+<%# FORM_TAG %>
+<div class="container px-5 mb-3">
+<div class="row py-4 mb-4">
+  <h2>Il est temps de faire son gossip !</h2>
+</div>
+<%= form_tag url_for(action: 'create'), method: "post" do %>
+      <div class="mb-3">
+        <%= label_tag 'Auteur' %>
+      </div>
+      <div class="mb-3">
+        <%= select_tag "new_gossip_author_id", options_from_collection_for_select(@users, "id", "full_name"), class:"form-select"%>
+      </div>
+      <br /> 
+      <div class="mb-1">
+        <%= label_tag 'Titre' %>
+      </div>
+      <div class="mb-3">
+        <%= text_field_tag 'new_gossip_title', @gossip.title, class: "form-control" %>
+      </div>
+      <br /> 
+      <div class="mb-1">
+        <%= label_tag 'Contenu' %>
+      </div>
+      <div class="mb-1">
+      <%= text_area_tag 'new_gossip_content', @gossip.content, class: "form-control" %>
+      </div>
+      <br /> 
+      <div class="mb-1">
+        <%= label_tag 'Tags' %>
+      </div>
+      <div class="mb-1">
+      <%@tags.each do |tag|%>
+        <%= label_tag tag.id, "#{tag.title}" %>
+        <%= check_box_tag 'tags_id[]', tag.id%>
+      <% end %>
+      </div>
+      <br /> <br />
+      <button type="submit" class="btn btn-primary">Créer ton gossip</button>
+<% end %>
+</div>

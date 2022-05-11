@@ -1,0 +1,23 @@
+
+<div class="container px-5 mb-3">
+<div class="row py-4 mb-4">
+  <h2>Ajouter un commentaire</h2>
+</div>
+  <%= form_tag url_for(action: 'create'), method: "post" do %>
+        <div class="mb-3">
+          <%= label_tag 'Auteur' %>
+        </div>
+        <div class="mb-3">
+          <%= select_tag "comment_author_id", options_from_collection_for_select(@users, "id", "full_name")%>
+        </div>
+        <br /> 
+        <div class="mb-1">
+          <%= label_tag 'Commentaire' %>
+        </div>
+        <div class="mb-3">
+          <%= text_area_tag 'content', @comment.content, class: "form-control" %>
+        </div>
+        <br /> <br />
+        <button type="submit" class="btn btn-primary">Créer ton gossip</button>
+  <% end %>
+</div>
