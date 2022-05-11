@@ -23,25 +23,26 @@ end
 
 ### Create 10 users
 10.times do
-  User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, description: "Generated description ##{Faker::Number.number(digits: 5)}",
- email: "email_#{Faker::Number.number(digits: 4)}@mail.com", age: rand(12..65), city: City.all.sample)
+  User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, description: "Generated description ##{Faker::Number.number(digits: 5)}", email: "email#{Faker::Number.number(digits: 4)}@mail.com", age: rand(12..65), city: City.all.sample, password_digest: Faker::Lorem.characters(number: rand(7..12)))
 end
 
 ### Create 50 private messages
 50.times do
-  PrivateMessage.create(sender: User.all.sample, content: Faker::Lorem.paragraph(sentence_count: 2))
+  pm = PrivateMessage.create(sender: User.all.sample, content: Faker::Lorem.paragraph(sentence_count: 2))
+
 end
 
 ### Join messages to several reveivers
-50.times do
-  message = PrivateMessage.all.sample
-  send_user = message.sender
-  reveive_user = send_user
-  while reveive_user == send_user
-    reveive_user = User.all.sample
-  end
-  RecipientMessage.create(recipient: User.all.sample, private_message: message)
-end
+# 50.times do
+#   message = PrivateMessage.all.sample
+#   puts message
+#   send_user = message.sender
+#   reveive_user = send_user
+#   while reveive_user == send_user
+#     reveive_user = User.all.sample
+#   end
+#   RecipientMessage.create(recipient: User.all.sample, private_message: message)
+# end
 
 ### Create 20 gossips
 20.times do

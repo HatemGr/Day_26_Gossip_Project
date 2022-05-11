@@ -1,0 +1,17 @@
+<%# ALERT PART %>
+<% flash.any? %>
+  <% flash.each do |color,msg|%>
+  <div class="alert alert-<%=color%> alert-dismissible fade show" role="alert">
+  <strong><%=msg%></strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% end %>
+<%# ALERT PART %>
+
+<%= form_for :session, url: sessions_path do |f|%>
+  <label>Email</label>
+  <%= f.text_field :email, class: 'form-control'%>
+  <label>Mot de passe :</label>
+  <%= f.text_field :password, class: 'form-control', type:'password'%>
+   <button type="submit" class="btn btn-primary">Se connecter</button>
+<%end%>

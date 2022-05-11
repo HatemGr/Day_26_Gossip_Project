@@ -13,26 +13,28 @@ class GossipsController < ApplicationController
   end
 
   def create
-    puts "#" * 50
-    puts params
-    puts "#" * 50
-    
-    @gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: User.find(params[:new_gossip_author_id]))
+
+    @gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: User.find_by(id: session[:user_id]))
+    #@gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: nil)
+    #@gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: User.find(params[:new_gossip_author_id]))
     @users = User.all
 
-    params[:tags_id].each do |tag_id|
-      GossipTag.create(gossip: @gossip, tag: Tag.find(tag_id))
+    unless params[:tags_id].nil?
+      params[:tags_id].each do |tag_id|
+        GossipTag.create(gossip: @gossip, tag: Tag.find(tag_id))
+      end
     end
     
     if @gossip.save 
       flash[:success] = "Le gossip a été sauvegardé"
       redirect_to new_gossip_path
     else
-      message = "Nous navons pas réussi à créer le potin pour la (ou les) raison(s) suivante(s) :<br>"
+      error_messages = "" 
       @gossip.errors.full_messages.each do |error|
-        message += error + "<br>"
+        error_messages += error + "<br/>"
       end
       flash[:danger] = "Il y a une erreur avec les entrées du gossip"
+      flash[:errors] = error_messages
       redirect_to new_gossip_path
     end
   end

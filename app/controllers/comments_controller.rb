@@ -16,7 +16,10 @@ class CommentsController < ApplicationController
     puts params
     puts "#" * 50
     puts comment_params
-    @comment = Comment.new(content: comment_params[:content], gossip: Gossip.find(params[:gossip_id]),user: User.find(params[:comment_author_id]))
+    
+    @comment = Comment.new(content: comment_params[:content], gossip: Gossip.find(params[:gossip_id]), user: User.find_by(id: session[:user_id]))
+    #@comment = Comment.new(content: comment_params[:content], gossip: Gossip.find(params[:gossip_id]),user: User.find(params[:comment_author_id]))
+    
     if @comment.save
       flash[:success] = "Commentaire sauvegardé"
       redirect_to gossip_path(params[:gossip_id])

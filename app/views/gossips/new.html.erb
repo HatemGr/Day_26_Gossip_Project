@@ -23,12 +23,14 @@
 <%# FORM_FOR IN IF BLOCK TO NOT AFFECT APP%>
 
 <%# ALERT PART %>
-<% flash.any? %>
-  <% flash.each do |color,msg|%>
-  <div class="alert alert-<%=color%> alert-dismissible fade show" role="alert">
-  <strong><%=msg%></strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<% if flash.any? %>
+    <div class="alert alert-<%=flash.keys.first%> alert-dismissible fade show" role="alert">
+      <strong><%=flash[flash.keys.first]%></strong><br/>
+      <% unless flash[:errors].nil? %>
+      <%=flash[:errors].html_safe%>
+      <% end %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> 
 <% end %>
 <%# ALERT PART %>
 

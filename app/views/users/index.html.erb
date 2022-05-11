@@ -1,2 +1,57 @@
-<h1>User#index</h1>
-<p>Find me in app/views/user/index.html.erb</p>
+
+<%# ALERT PART %>
+<% flash.any? %>
+  <% flash.each do |color,msg|%>
+  <div class="alert alert-<%=color%> alert-dismissible fade show" role="alert">
+  <strong><%=msg%></strong>
+  <% unless flash[:errors].nil? %>
+    <%=flash[:errors]%>
+  <% end %>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% end %>
+<%# ALERT PART %>
+<%= @users.each do |user|%>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card">
+          <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+              <img src="https://source.unsplash.com/200x200/?portrait?sig=<%=rand(1..50)%>"
+                alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                style="width: 150px; z-index: 1">
+                
+              <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                style="z-index: 1;">
+                <%=user.age%> years old
+              </button>
+            </div>
+            <div class="ms-3" style="margin-top: 130px;">
+              <h5><%=user.first_name%> <%=user.last_name%></h5>
+              <p><%=link_to user.city.name, city_path(user.city)%></p>
+            </div>
+          </div>
+          <div class="p-4 text-black" style="background-color: #f8f9fa;">
+            <div class="d-flex justify-content-end text-center py-1">
+              
+              <div>
+                <p class="mb-1 h5"><%=user.gossips.size%></p>
+                <p class="small text-muted mb-0">Gossips</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4 text-black">
+            <div class="mb-5">
+              <p class="lead fw-normal mb-1">About</p>
+              <div class="p-4" style="background-color: #f8f9fa;">
+                <p class="font-italic mb-1"><%=user.description%></p>
+                <p class="font-weight-light mb-0"> email : <%=user.email%></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%end%>

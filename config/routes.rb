@@ -1,26 +1,18 @@
 Rails.application.routes.draw do
-
-  # ------ HOME(GOSSIP INDEX) - GOSSIP SHOW
+  resources :users
+  resources :cities, only: [:index, :show]
+  resources :sessions, only: [:new, :create, :destroy]
   resources :gossips
   root to: 'gossips#index'
-
-
   resources :gossips  do
     resources :comments
   end
 
-
-  # ------ USER SHOW
-  resources :users, only: [:index, :show]
-
-  # ------ USER SHOW
-  resources :cities, only: [:index, :show]
-
-  # ------ STATIC PAGES : TEAM - CONTACT - URL_CACHEE
+  #---------- STATIC PAGES--- TEAM - CONTACT - URL_CACHEE
   get '/team', to: 'pages#team', as: 'team'
   get 'contact/', to: 'pages#contact', as: 'contact'
   get '/welcome/:first_name', to: 'pages#welcome'
-  
+  get 'sessions/profile', to: "sessions#profile"
 end
 
 
