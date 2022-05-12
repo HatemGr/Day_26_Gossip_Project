@@ -31,20 +31,30 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="<%= user_path(User.all.sample) %>">Random User</a>
             </li>
+            
+
+
             <%if session[:user_id].nil?%>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<%= new_user_path %>">Creer un compte</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<%= new_session_path %>">Connexion</a>
-            </li>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle bg-dark border-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Commencer
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="<%= new_user_path %>">Creer un compte</a></li>
+                <li><a class="dropdown-item" href="<%= new_session_path %>">Connexion</a></li>
+              </ul>
+            </div>
             <%else%>
             <li class="nav-item">
               <%= button_to "De deconnecter", session_path(session.id), :method=>:delete, class:"btn btn-dark" %>
             </li>
               <%# <%= button_to "Se déconnecter", session_path(session.id), method: :delete, class:"nav-link active" %>
             <%end%>
+
             
+            
+
+
           </ul>
 
           <span class="navbar-text">
