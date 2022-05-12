@@ -15,6 +15,8 @@
 
 
 <%# GOSSIP PART %>
+
+
 <div class="card">
   <div class="card-header">
     <%= @gossip.title%>
@@ -31,16 +33,29 @@
   </div>
 </div>
 
-<% if @gossip.user == current_user%>
-<div class="container-fluid text-center row pt-4">
-  <div class="col">
-  <%=link_to "Editer ce Gossip", edit_gossip_path(@gossip), class:"btn btn-primary" %>
-  </div>
-  <div class="col">
-  <%=button_to "Supprimer ce Gossip", gossip_path(@gossip), method: :delete, class:"btn btn-danger" %>
-  </div>
-</div>
+<div class="text-center mt-3">
+<% if already_liked?(current_user,@gossip)%>
+  <%#=button_to "Unlike ce gossip", gossip_like_path(@gossip.id, find_like(current_user,@gossip)), method: :delete, class:"btn btn-info" %>
+  <%=button_to gossip_like_path(@gossip.id, find_like(current_user,@gossip)), method: :delete, :class => "btn btn-outline-primary disliked" do %>
+  <i class="bi bi-heart-fill"></i>&nbsp; <%= like_counter(@gossip)%> like<%end%>
+  <%else%>
+  <%=button_to gossip_likes_path(@gossip.id), method: :create, :class => "btn btn-primary disliked" do %>
+  <i class="bi bi-heart-fill"></i>&nbsp; <%= like_counter(@gossip)%> like<%end%>
 <%end%>
+</div>
+
+<% if @gossip.user == current_user%>
+  <div class="container-fluid text-center row pt-4">
+    <div class="col">
+    <%=link_to "Editer ce Gossip", edit_gossip_path(@gossip), class:"btn btn-primary" %>
+    </div>
+    <div class="col">
+    <%=button_to "Supprimer ce Gossip", gossip_path(@gossip), method: :delete, class:"btn btn-danger" %>
+    </div>
+  </div>
+<%end%>
+
+
 
 
 <%# GOSSIP PART %>

@@ -1,13 +1,16 @@
 
+<%#---- CREATION DE GOSSIP -----%>
 <div class="card text-white bg-dark mb-3">
     <div class="card-header">Poste ton gossip et fait rêver la peoplesphére</div>
-    <div class="card-body">
-      <h5 class="card-title px-5"><%=link_to 'Écrire un gossip', new_gossip_path%></h5>
-    </div>
-  </div>
+      <div class="card-body">
+        <h5 class="card-title px-5"><%=link_to 'Écrire un gossip', new_gossip_path, class:"link-light"%></h5>
+      </div>
+</div>
 
+<%#---- CARTE PAR GOSSIP -----%>
 <% @gossips.each.with_index do |gossip,i|%>
   
+  <%#---- GOSSIP NUMBER AND TAGS -----%>
   <div class="card my-3">
     <div class="card-header">
       Gossip n°<%= i+1 %>
@@ -16,32 +19,38 @@
       <% end%>
     </div>
 
-    
+    <%#---- TITLE AND AUTHOR -----%>
     <div class="container-fluid row">
-      <div class="card-body col-8">
+      <div class="card-body col-6">
         <h5 class="card-title">Titre : <%= gossip.title %></h5>
         <p class="card-text">Auteur : <%= link_to gossip.user.first_name, user_path(gossip.user)  %> </p>
       </div>
       
-      <div class="card-body col-2">
-        <button type="button" class="btn btn-primary position-relative">
-          Commentaires
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            <%=gossip.comments.size%>
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </button>
+      <%#---- COMMENT PART -----%>
+      <div class="col-2 d-flex align-items-center">
+        <div class="btn btn-dark ">
+          <i class="bi bi-chat-left-dots-fill"></i> &nbsp;<%= comment_counter(gossip)%>&nbsp; comments
+        </div>
+      </div>
+
+      <%#---- LIKE PART -----%>
+      <div class="col-2 d-flex justify-content-end align-items-center">
+      <% if already_liked?(current_user,gossip)%>
+        <%#=button_to "Unlike ce gossip", gossip_like_path(gossip.id, find_like(current_user,gossip)), method: :delete, class:"btn btn-info" %>
+        <%=button_to gossip_like_path(gossip.id, find_like(current_user,gossip)), method: :delete, :class => "btn btn-outline-primary disliked" do %>
+        <i class="bi bi-heart-fill"></i>&nbsp; <%= like_counter(gossip)%> like<%end%>
+        <%else%>
+        <%=button_to gossip_likes_path(gossip.id), method: :create, :class => "btn btn-primary disliked" do %>
+        <i class="bi bi-heart-fill"></i>&nbsp; <%= like_counter(gossip)%> like<%end%>
+      <%end%>
       </div>
       
-      
+      <%#---- LINK TO GOSSIP SHOW -----%>
       <div class="col-2 d-flex justify-content-end align-items-center">
         <div class="row">
         <p><%= link_to 'Go Gossip', gossip_path(gossip) %></p>
         </div>
         <br/>
-        <div class="row">
-        
-        </div>
       </div>
    
     </div>

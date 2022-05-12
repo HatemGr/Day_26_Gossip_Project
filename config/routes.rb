@@ -2,17 +2,21 @@ Rails.application.routes.draw do
   resources :users
   resources :cities, only: [:index, :show]
   resources :sessions, only: [:new, :create, :destroy]
+  resources :likes, only: [:new, :destroy]
   resources :gossips
   root to: 'gossips#index'
   resources :gossips  do
     resources :comments
+  end
+  
+  resources :gossips  do
+    resources :likes, only: [:create, :destroy]
   end
 
   #---------- STATIC PAGES--- TEAM - CONTACT - URL_CACHEE
   get '/team', to: 'pages#team', as: 'team'
   get 'contact/', to: 'pages#contact', as: 'contact'
   get '/welcome/:first_name', to: 'pages#welcome'
-  get 'sessions/profile', to: "sessions#profile"
 end
 
 
