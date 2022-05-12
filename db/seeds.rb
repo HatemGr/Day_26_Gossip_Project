@@ -51,9 +51,9 @@ end
 end
 
 ### Create 10 tags
-10.times do
-  Tag.create(title: Faker::Lorem.word)
-end
+tag_list = ['people', 'rupture', 'hot', 'amour', 'argent', 'scandale', 'tragedie', 'joie', 'evenement', 'autre']
+tag_list.each {|tag| Tag.create(title: tag)}
+
 
 ### Give a tag to each gossip
 Gossip.all.each do |gossip|
