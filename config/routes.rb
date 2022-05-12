@@ -16,7 +16,6 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :destroy]
   end
 
-  #---------- STATIC PAGES--- TEAM - CONTACT - URL_CACHEE
   resources :static_pages, only: [:index, :show, :new]
   end
 
@@ -26,7 +25,6 @@ Rails.application.routes.draw do
 # post 'gossips/new', to: 'gossips#create'
 # get '/gossips/:id', to: 'gossips#show', as: 'gossip'
 # get '/users/:id', to: 'users#show', as: 'user'
-
 # get '/team', to: 'pages#team', as: 'team'
 # get 'contact/', to: 'pages#contact', as: 'contact'
 # get '/welcome/:first_name', to: 'pages#welcome'

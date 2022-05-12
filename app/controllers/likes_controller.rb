@@ -36,7 +36,7 @@ class LikesController < ApplicationController
   def authenticate_user
     unless current_user
       flash[:danger] = "Please log in."
-      rredirect_to gossip_path(params[:gossip_id])
+      redirect_to gossip_path(params[:gossip_id])
     end
   end
 
