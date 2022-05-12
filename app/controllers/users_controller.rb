@@ -5,19 +5,14 @@ class UsersController < ApplicationController
   end
 
   def create 
-    puts "#" * 50
-    puts params
-    puts "#" * 50
-    puts user_params
-    puts "#" * 50
     new_user_params = user_params.merge(city: City.find(params[:city]))
-    puts new_user_params
-    puts "#" * 50
+  
 
     @user = User.new(new_user_params)
     @cities = City.all
     
     if @user.save
+      log_in(@user)
       flash[:success] = "Compte créé"
       redirect_to user_path(@user)
     else

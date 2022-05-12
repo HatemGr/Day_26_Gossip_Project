@@ -6,7 +6,7 @@ class Gossip < ApplicationRecord
   has_many :gossip_tags
   has_many :tags, through: :gossip_tags
   has_many :comments
-  # has_many :likes
+  has_many :likes
 
   def self.get_gossip_by_id(id)
     return Gossip.all[id.to_i-1]

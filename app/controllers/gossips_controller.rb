@@ -1,5 +1,5 @@
 class GossipsController < ApplicationController
-  
+  before_action :authenticate_user, only: [:show, :update, :destroy]
   before_action :set_gossip, only: [:show, :update, :destroy, :edit]
 
   def index
@@ -70,8 +70,6 @@ class GossipsController < ApplicationController
     end
   end
 
-
-
   private
 
   def gossip_params
@@ -80,6 +78,13 @@ class GossipsController < ApplicationController
 
   def set_gossip 
     @gossip = Gossip.find(params[:id])
+  end
+
+  def authenticate_user
+    unless current_user
+      flash[:danger] = "Please log in."
+      redirect_to new_session_path
+    end
   end
 
 end

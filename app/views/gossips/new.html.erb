@@ -41,25 +41,33 @@
   <h2>Il est temps de faire son gossip !</h2>
 </div>
 <%= form_tag url_for(action: 'create'), method: "post" do %>
+      <% if logged_in?() %>
       <div class="mb-3">
-        <%= label_tag 'Auteur' %>
+        <%= label_tag 'Auteur(e)' %>
       </div>
       <div class="mb-3">
-        <%= select_tag "new_gossip_author_id", options_from_collection_for_select(@users, "id", "full_name"), class:"form-select"%>
+        <%= current_user.full_name%>
       </div>
+      <%else%>
+      <div class="mb-3">
+        <%= label_tag 'Il faut etre connecté pour poster un gossip. Tu peux faire ça'%> <%=link_to 'ici.', new_session_path%>
+      </div>
+      <%end%>
+
+
       <br /> 
       <div class="mb-1">
         <%= label_tag 'Titre' %>
       </div>
       <div class="mb-3">
-        <%= text_field_tag 'new_gossip_title', @gossip.title, class: "form-control" %>
+        <%= text_field_tag 'new_gossip_title', @gossip.title, class: "form-control", disabled:current_user.nil?%>
       </div>
       <br /> 
       <div class="mb-1">
         <%= label_tag 'Contenu' %>
       </div>
       <div class="mb-1">
-      <%= text_area_tag 'new_gossip_content', @gossip.content, class: "form-control" %>
+      <%= text_area_tag 'new_gossip_content', @gossip.content, class: "form-control", disabled:current_user.nil? %>
       </div>
       <br /> 
       <div class="mb-1">
@@ -72,6 +80,8 @@
       <% end %>
       </div>
       <br /> <br />
+      <% if logged_in?() %>
       <button type="submit" class="btn btn-primary">Créer ton gossip</button>
+      <%end%>
 <% end %>
 </div>

@@ -31,6 +31,7 @@
   </div>
 </div>
 
+<% if @gossip.user == current_user%>
 <div class="container-fluid text-center row pt-4">
   <div class="col">
   <%=link_to "Editer ce Gossip", edit_gossip_path(@gossip), class:"btn btn-primary" %>
@@ -39,6 +40,9 @@
   <%=button_to "Supprimer ce Gossip", gossip_path(@gossip), method: :delete, class:"btn btn-danger" %>
   </div>
 </div>
+<%end%>
+
+
 <%# GOSSIP PART %>
 
 <%# COMMENT PART %>
@@ -57,16 +61,18 @@
             <p class="text-secondary m-0 p-0"> by: <%= link_to comment.user.full_name, user_path(comment.user)  %> </p>
           </div>
 
+          <%if comment.user == current_user%>
           <div class="col-4">
             <div class="d-flex justify-content-end">
               <p class="m-1"><%=link_to "Editer ou Supprimer commentaire", edit_gossip_comment_path(@gossip.id,comment.id), class:"btn btn-primary" %></p>
             </div>
           </div>
         </div>
+        <%end%>
 
       </li>
   
-      <%end %>
+      <%end%>
     <%end %>
   </ul>
 
@@ -76,13 +82,21 @@
 
   <%=form_for @comment, url: gossip_comments_path(@gossip,@comment) do |f|%>
   <div class="form-group my-3">
+    <% if logged_in?() %>
     <div class="mb-3">
-      <%= select_tag "comment_author_id", options_from_collection_for_select(@users, "id", "full_name"),class:"form-select"%>
+      Lache nous un super commentaire <%= current_user.first_name %>
     </div>
+    <%else%>
+      <div class="mb-3">
+        <%= label_tag 'Il faut etre connecté pour commenter, ça se fait' %> <%=link_to 'ici.', new_session_path%>
+      </div>
+    <%end%>
     <label>Contenu du commentaire: </label>
-    <%= f.text_area :content, class: 'form-control', value:@comment.content%>
+    <%= f.text_area :content, class: 'form-control', value:@comment.content, disabled:current_user.nil?%>
   </div>
+  <% if logged_in?() %>
   <button type="submit" class="btn btn-primary">Ajouter un commentaire</button>
+  <%end%>
 <%end%>
 
 

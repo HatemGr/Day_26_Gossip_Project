@@ -24,6 +24,6 @@ class SessionsController < ApplicationController
   end
 
   def profile
-    
   end
+  
 end
