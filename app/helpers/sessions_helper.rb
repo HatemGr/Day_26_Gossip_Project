@@ -21,7 +21,7 @@ module SessionsHelper
   end
 
   def remember(user)
-    # ici je vais créer un remember_token qui est une suite aléatoire de caractères
+    # ici je vais créer un remember_token qui est une suite aléatoire de caractèressss
     remember_token = SecureRandom.urlsafe_base64
 
     # j'ai mon token, je vais stocker son digest en base de données :    

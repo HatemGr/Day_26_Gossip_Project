@@ -1,5 +1,5 @@
 class GossipsController < ApplicationController
-  before_action :authenticate_user, only: [:show, :update, :destroy]
+  before_action :authenticate_user, only: [:update, :destroy]
   before_action :set_gossip, only: [:show, :update, :destroy, :edit]
 
   def index
@@ -13,7 +13,6 @@ class GossipsController < ApplicationController
   end
 
   def create
-
     @gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: User.find_by(id: session[:user_id]))
     #@gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: nil)
     #@gossip = Gossip.new(title: params[:new_gossip_title], content: params[:new_gossip_content], user: User.find(params[:new_gossip_author_id]))
