@@ -30,7 +30,8 @@ class LikesController < ApplicationController
     puts params
     puts "#" * 50
     Like.find(params[:id]).destroy
-    redirect_to gossip_path(params[:gossip_id])
+    #redirect_to gossip_path(params[:gossip_id])
+    redirect_back(fallback_location: root_path)
   end
 
   private
@@ -38,8 +39,7 @@ class LikesController < ApplicationController
   def authenticate_user
     unless current_user
       flash[:danger] = "Please log in."
-      #redirect_to gossip_path(params[:gossip_id])
-      redirect_back(fallback_location: root_path)
+      redirect_to gossip_path(params[:gossip_id])
     end
   end
 
