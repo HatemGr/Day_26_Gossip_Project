@@ -27,7 +27,7 @@ class GossipsController < ApplicationController
     
     if @gossip.save 
       flash[:success] = "Le gossip a été sauvegardé"
-      redirect_to new_gossip_path
+      redirect_to root_path
     else
       error_messages = "" 
       @gossip.errors.full_messages.each do |error|
