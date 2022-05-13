@@ -12,12 +12,14 @@ class LikesController < ApplicationController
       puts "#" * 50
       puts "Like enregistré"
       puts "#" * 50
-      redirect_to gossip_path(params[:gossip_id])
+      #redirect_to gossip_path(params[:gossip_id])
+    redirect_back(fallback_location: root_path)
       else
       puts "#" * 50
       puts "Like pas enregistré"
       puts "#" * 50
-      redirect_to gossip_path(params[:gossip_id])
+      #redirect_to gossip_path(params[:gossip_id])
+      redirect_back(fallback_location: root_path)
     end
   
   end
@@ -36,7 +38,8 @@ class LikesController < ApplicationController
   def authenticate_user
     unless current_user
       flash[:danger] = "Please log in."
-      redirect_to gossip_path(params[:gossip_id])
+      #redirect_to gossip_path(params[:gossip_id])
+      redirect_back(fallback_location: root_path)
     end
   end
 
