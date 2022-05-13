@@ -5,14 +5,10 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :likes, only: [:new, :destroy]
   
-  resources :gossips
   root to: 'gossips#index'
   
   resources :gossips  do
     resources :comments
-  end
-  
-  resources :gossips  do
     resources :likes, only: [:create, :destroy]
   end
 
@@ -26,3 +22,7 @@ Rails.application.routes.draw do
 # get '/team', to: 'pages#team', as: 'team'
 # get 'contact/', to: 'pages#contact', as: 'contact'
 # get '/welcome/:first_name', to: 'pages#welcome'
+  
+# resources :gossips  do
+#   resources :likes, only: [:create, :destroy]
+# end

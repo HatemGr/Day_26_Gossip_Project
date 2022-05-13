@@ -6,11 +6,9 @@ class UsersController < ApplicationController
 
   def create 
     new_user_params = user_params.merge(city: City.find(params[:city]))
-  
-
     @user = User.new(new_user_params)
     @cities = City.all
-    
+  
     if @user.save
       log_in(@user)
       flash[:success] = "Compte créé"
@@ -26,7 +24,6 @@ class UsersController < ApplicationController
     end
   end
   
-  
   def index
     @users = User.all
   end
@@ -36,6 +33,7 @@ class UsersController < ApplicationController
   end
 
   private 
+
   def user_params 
     params.require(:user).permit(:first_name, :last_name, :city, :email, :description, :age, :password, :password_confirmation)
   end

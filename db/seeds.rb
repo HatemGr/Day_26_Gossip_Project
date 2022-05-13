@@ -17,9 +17,11 @@ GossipTag.destroy_all
 RecipientMessage.destroy_all
 
 ### Create 10 cities
-10.times do
-  City.create(name: Faker::Address.city, zip_code: Faker::Number.number(digits: 5).to_s)
-end
+# 10.times do
+#   City.create(name: Faker::Address.city, zip_code: Faker::Number.number(digits: 5).to_s)
+# end
+city_list = ['Lille', 'Lorient', 'Rennes' ,'Paris', 'Strasbourg', 'Nantes', 'Toulouse', 'Montpellier', 'Marseille', 'Nice'].sort
+city_list.each {|city| City.create(name: city,zip_code: Faker::Number.number(digits: 5).to_s)}
 
 ### Create 10 users
 10.times do
