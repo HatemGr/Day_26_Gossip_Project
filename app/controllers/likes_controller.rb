@@ -12,12 +12,14 @@ class LikesController < ApplicationController
       puts "#" * 50
       puts "Like enregistré"
       puts "#" * 50
-      redirect_to gossip_path(params[:gossip_id])
+      #redirect_to gossip_path(params[:gossip_id])
+      redirect_back(fallback_location: root_path)
       else
       puts "#" * 50
       puts "Like pas enregistré"
       puts "#" * 50
-      redirect_to gossip_path(params[:gossip_id])
+      #redirect_to gossip_path(params[:gossip_id])
+      redirect_back(fallback_location: root_path)
     end
   
   end
@@ -28,7 +30,8 @@ class LikesController < ApplicationController
     puts params
     puts "#" * 50
     Like.find(params[:id]).destroy
-    redirect_to gossip_path(params[:gossip_id])
+    #redirect_to gossip_path(params[:gossip_id])
+    redirect_back(fallback_location: root_path)
   end
 
   private

@@ -19,8 +19,6 @@ Rails.application.routes.draw do
   resources :static_pages, only: [:index, :show, :new]
   end
 
-
-
 # get 'gossips/new', to: 'gossips#new', as: 'new_gossip'
 # post 'gossips/new', to: 'gossips#create'
 # get '/gossips/:id', to: 'gossips#show', as: 'gossip'
