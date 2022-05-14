@@ -7,11 +7,11 @@ class SessionsController < ApplicationController
     puts params
     puts "#" * 50
     session_params = params.require(:session).permit(:email, :password)
-    remembrance = params.require(:session).permit(:remembrance)
+    remembrance = params.require(:session).permit(:remember)[:remember]
     user = User.find_by(email: session_params[:email])
     if user && user.authenticate(session_params[:password])
       session[:user_id] = user.id
-      remember(user) if remembrance
+      remember(user) if remembrance == "1"
       flash[:success] = "Tu es connecté"
       redirect_to root_path
     else
