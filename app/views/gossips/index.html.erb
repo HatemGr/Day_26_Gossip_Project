@@ -1,3 +1,13 @@
+<%# ALERT PART %>
+<% flash.any? %>
+  <% flash.each do |color,msg|%>
+  <div class="alert alert-<%=color%> alert-dismissible fade show" role="alert">
+  <strong><%=msg%></strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% end %>
+<%# ALERT PART %>
+
 <% if current_user%>
 <div class="container-fluid">
   <h1> Hello <%= current_user.full_name%></h1>

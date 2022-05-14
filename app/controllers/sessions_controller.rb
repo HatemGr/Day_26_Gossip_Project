@@ -3,11 +3,15 @@ class SessionsController < ApplicationController
   end
 
   def create
+    puts "#" * 50
+    puts params
+    puts "#" * 50
     session_params = params.require(:session).permit(:email, :password)
+    remembrance = params.require(:session).permit(:remembrance)
     user = User.find_by(email: session_params[:email])
     if user && user.authenticate(session_params[:password])
       session[:user_id] = user.id
-      remember(user)
+      remember(user) if remembrance
       flash[:success] = "Tu es connecté"
       redirect_to root_path
     else
@@ -17,7 +21,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    forget(current_user)
+    flash[:success] = "Tu es deconnecté"
+    forget(current_user) if current_user
     session.delete(:user_id)
     redirect_to root_path
   end
